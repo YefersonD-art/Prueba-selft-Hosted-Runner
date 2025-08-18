@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  # Servicio para producción (main)
+  sitio-prod:
+    build: .
+    container_name: web-prod
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # Servicio para QA
+  sitio-qa:
+    build: .
+    container_name: web-qa
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+
+  # Servicio para desarrollo
+  sitio-dev:
+    build: .
+    container_name: web-dev
+    ports:
+      - "8082:80"
