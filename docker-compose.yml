@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   # Servicio para producción (main)
-  sitio-prod:
+  web-prod:
     build: .
     container_name: web-prod
     ports:
@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
 
   # Servicio para QA
-  sitio-qa:
+  web-qa:
     build: .
     container_name: web-qa
     ports:
@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
 
   # Servicio para desarrollo
-  sitio-dev:
+  web-dev:
     build: .
     container_name: web-dev
     ports:
