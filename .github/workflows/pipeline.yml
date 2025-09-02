@@ -35,28 +35,13 @@ jobs:
         run: |
           echo "🔍 Verificando formato del código con Prettier..."
           
-          # Ejecutar prettier check y capturar la salida
-          if npm run format:check 2>&1; then
+          if npm run format:check; then
             echo "✅ ¡Perfecto! El código está correctamente formateado"
           else
+            echo "::error title=Código mal formateado::Algunos archivos no están correctamente formateados. Ejecuta 'npm run format' localmente, haz commit y push de nuevo."
             echo ""
-            echo "❌ FORMATO INCORRECTO DETECTADO"
-            echo "================================"
-            echo ""
-            echo "Los siguientes archivos necesitan ser formateados:"
-            echo ""
-            
-            # Mostrar específicamente qué archivos están mal formateados
-            npm run format:check 2>&1 || true
-            
-            echo ""
-            echo "� CÓMO SOLUCIONARLO:"
-            echo "1. Ejecuta en tu terminal local: npm run format"
-            echo "2. Haz commit de los cambios: git add . && git commit -m 'fix: formateo de código'"
-            echo "3. Haz push: git push"
-            echo ""
-            echo "💡 También puedes configurar tu editor para formatear automáticamente al guardar"
-            
+            echo "📋 Archivos que necesitan formateo:"
+            npm run format:check || true
             exit 1
           fi
 
