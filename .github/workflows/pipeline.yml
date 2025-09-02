@@ -7,8 +7,8 @@ on:
       - dev
 
 jobs:
-  code-quality:
-    name: Verificar calidad del código
+  code-quality-check:
+    name: ✅ Verificar calidad del código
     runs-on: ubuntu-latest
     steps:
       - name: Clonar repositorio
@@ -26,16 +26,22 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Verificar formato con Prettier
-        run: npm run format:check
-
-      - name: Ejecutar Prettier si es necesario
-        run: npm run format
+      - name: Verificar formato con Prettier (OBLIGATORIO)
+        run: |
+          echo "🔍 Verificando formato del código..."
+          npm run format:check
+          if [ $? -eq 0 ]; then
+            echo "✅ El código está correctamente formateado"
+          else
+            echo "❌ El código NO está correctamente formateado"
+            echo "💡 Ejecuta 'npm run format' localmente y haz commit de nuevo"
+            exit 1
+          fi
 
   deploy:
-    name: Desplegar aplicación
+    name: 🚀 Desplegar aplicación
     runs-on: self-hosted
-    needs: code-quality
+    needs: code-quality-check
     if: success()
     steps:
       - name: Clonar repositorio
